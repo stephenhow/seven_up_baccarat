@@ -133,5 +133,5 @@ int main(int argc, const char * argv[])
             if (verbose[2]) {printStats(sevensStats); printf("\n");}
         }
     }
-	return 0;
+    return 0;
 }
