@@ -15,6 +15,7 @@ void usage() {
 static int history[MAX_WINDOW_DEPTH];
 static int wp=0, windowSize=20;     // default value
 
+// count values for Banker
 int bankerWeight(int card) {
     switch (card) {
         case 0: return 1;
@@ -26,6 +27,7 @@ int bankerWeight(int card) {
     }
 }
 
+// count values for Player
 int playerWeight(int card) {
     switch (card) {
         case 0: return 0;
@@ -41,6 +43,7 @@ int sevensWeight(int card) {
     return (card == 7) ? -12 : 1;
 }
 
+// returns windowed count for given weight function
 int count(int (*weight)(int)) {
     int total = 0;
     for (int i=0; i<windowSize; i++) {
@@ -62,6 +65,15 @@ void addStats(double value, int count, map<int,Averager> &stats) {
 void printStats(map<int,Averager> &stats) {
     for (map<int,Averager>::iterator iter=stats.begin(); iter!=stats.end(); iter++) {
         printf("%+2d: %+8.6f\n", iter->first, iter->second.getMean());
+    }
+}
+
+// add cards to history, then muck into CSM
+void countAndMuck(CSM &csm, vector<int>::iterator begin, vector<int>::iterator end) {
+    for (vector<int>::iterator iter=begin; iter!=end; iter++) {
+        csm.muck(*iter);
+        history[wp] = *iter;
+        wp = (wp+1)%windowSize;
     }
 }
 
@@ -111,17 +123,9 @@ int main(int argc, const char * argv[])
         playerNet += playerOutcome;
         sevensNet += sevensOutcome;
         // muck cards
-        for (vector<int>::iterator iter=banker.begin(); iter!=banker.end(); iter++) {
-            csm.muck(*iter);
-            history[wp] = *iter;
-            wp = (wp+1)%windowSize;
-        }
+        countAndMuck(csm, banker.begin(), banker.end());
         banker.clear();
-        for (vector<int>::iterator iter=player.begin()+1; iter!=player.end(); iter++) {
-            csm.muck(*iter);
-            history[wp] = *iter;
-            wp = (wp+1)%windowSize;
-        }
+        countAndMuck(csm, player.begin()+1, player.end());
         // leave the starting 7 in the player hand
         player.erase(player.begin()+1,player.end());
         hands++;
