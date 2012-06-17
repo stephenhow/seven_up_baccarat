@@ -1,6 +1,6 @@
 #include "baccarat7up.h"
 
-Hand::Hand() : vector<int>() {	
+Hand::Hand() : vector<int>() {  
 }
 
 int Hand::getTotal() {
@@ -8,7 +8,7 @@ int Hand::getTotal() {
     for (vector<int>::iterator iter=this->begin(); iter!=this->end(); iter++) {
         total += *iter;
     }
-	return (total%10);
+    return (total%10);
 }
 
 bool Hand::isNatural() {
@@ -121,11 +121,11 @@ CSM::CSM(int minDepth) {
 
 int CSM::deal() {
     int card, pos;
-	while (buffer.size() < 1+minBufferDepth) {
-		pos = reservoir.size()*random.genrand64_real2();
-		buffer.insert(buffer.end(), reservoir[pos]);
-		reservoir.erase(reservoir.begin()+pos);
-	}
+    while (buffer.size() < 1+minBufferDepth) {
+        pos = reservoir.size()*random.genrand64_real2();
+        buffer.insert(buffer.end(), reservoir[pos]);
+        reservoir.erase(reservoir.begin()+pos);
+    }
     card = buffer[0];
     buffer.erase(buffer.begin());
     return card;
