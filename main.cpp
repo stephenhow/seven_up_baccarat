@@ -6,10 +6,9 @@
 
 void usage() {
     printf("sevenUp [-m minBufferDepth] [-d maxSlotDepth] [-v 0|1|2] [-w windowSize]\n");
-	printf("  (set -m, -d as first arguments)\n");
     printf("  -m minBufferDepth sets the minimum buffer depth threshold in exit chute\n");
     printf("  -d maxSlotDepth sets the maximum cards placed in any CSM slot\n");
-	printf("  -v 0 = print player stats, 1 = print banker stats, 2 = print Super-7's stats\n");
+    printf("  -v 0 = print player stats, 1 = print banker stats, 2 = print Super-7's stats\n");
     printf("  -w windowSize sets the number of cards used in the count (last windowSize cards out of CSM)\n");
 }
 
