@@ -1,0 +1,7 @@
+Examples:
+
+Run with minBufferDepth of 16, and print out Super-7's EV vs. Windowed Count stats
+>./sevenUp -m16 -v2
+
+Run with minBufferDepth of 30, and windowSize of 30
+>./sevenUp -m30 -w30
