@@ -66,6 +66,7 @@ void printStats(map<int,Averager> &stats) {
     for (map<int,Averager>::iterator iter=stats.begin(); iter!=stats.end(); iter++) {
         printf("%+2d: %+8.6f\n", iter->first, iter->second.getMean());
     }
+    printf("\n");
 }
 
 // add cards to history, then muck into CSM
@@ -131,9 +132,9 @@ int main(int argc, const char * argv[])
         hands++;
         if (hands%10000000 == 0) {
             printf("hands: %ld, player EV: %+8.6f, banker EV: %+8.6f, sevens EV: %+8.6f\n", hands, playerNet/(double)hands, bankerNet/(double)hands, sevensNet/(double)hands);
-            if (verbose[0]) {printStats(playerStats); printf("\n");}
-            if (verbose[1]) {printStats(bankerStats); printf("\n");}
-            if (verbose[2]) {printStats(sevensStats); printf("\n");}
+            if (verbose[0]) printStats(playerStats);
+            if (verbose[1]) printStats(bankerStats);
+            if (verbose[2]) printStats(sevensStats);
         }
     }
     return 0;
